@@ -9,11 +9,13 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'html');
+app.engine( '.html', require( 'ejs' ).__express );
 
-app.get('/', function (req, res) {
-    res.render('index',{'title':'FIRST PAGE','content':'Hello World'});
-})
+// 设定静态文件目录，比如本地文件
+app.use(express.static(path.join(__dirname, 'public')));
+
+require('./routes')(app);
 
 var server = app.listen(7001, function () {
 
